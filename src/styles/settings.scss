@@ -1,0 +1,27 @@
+/**
+ * src/styles/settings.scss
+ *
+ * Configures SASS variables and Vuetify overwrites
+ */
+
+// https://next.vuetifyjs.com/features/sass-variables/`
+// @use 'vuetify' with (
+//   $color-pack: false
+// );
+
+$app-blue: #00a1e2;
+$app-yelo: #fdb812;
+$app-redd: #ca0204;
+
+::selection {
+    background: $app-blue; /* WebKit/Blink Browsers */
+    color: $app-yelo;
+}
+::-moz-selection {
+    background: $app-blue; /* Gecko Browsers */
+    color: $app-yelo;
+}
+
+.v-list-item-subtitle {
+    padding-left: 2em;
+}
