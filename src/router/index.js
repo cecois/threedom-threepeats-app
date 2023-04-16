@@ -1,12 +1,19 @@
 // Composables
 import { createRouter, createWebHistory } from "vue-router";
 
+// const rfunc = (route) => {
+//   return {
+//     panel: !route.params.panel ? "list" : route.params.panel,
+//     query: !route.params.query ? "*:*" : route.params.query,
+//     tell: !route.params.telliso ? "$" : route.params.telliso,
+//   };
+// };
+
 const rfunc = (route) => {
   return {
-    // panel: !route.params.panel ? "home" : route.params.panel,
-    panel: !route.params.panel ? "list" : route.params.panel,
-    query: !route.params.query ? "*:*" : route.params.query,
-    tell: !route.params.telliso ? "$" : route.params.telliso,
+    panel: route.params.panel,
+    query: route.params.query,
+    tell: route.params.telliso,
   };
 };
 
