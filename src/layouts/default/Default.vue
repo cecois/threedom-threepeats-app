@@ -16,12 +16,34 @@
         {{ tclass.label }}
       </span>
 
+<!-- 
+_GUAGES
+totalStories
+totalTellings
+aveTellingsPer
+totalEpisodes
+maxEpisode
+ -->
       <v-avatar color="brown" size="x-large" variant="outlined">
-        <span class="font-weight-black">666</span>
+        <span class="font-weight-black">{{_GUAGES.totalEpisodes}}</span>
+      </v-avatar> (through {{_GUAGES.maxEpisode}})
+
+      <v-avatar color="brown" size="x-large" variant="outlined">
+        <span class="font-weight-black">{{_GUAGES.totalStories}}</span>
+      </v-avatar> stories
+
+      <v-avatar color="brown" size="x-large" variant="outlined">
+        <span class="font-weight-black">{{_GUAGES.totalTellings}}</span>
       </v-avatar>
-      stories
+      tellings
+
+      <v-avatar color="brown" size="x-large" variant="outlined">
+        <span class="font-weight-black">{{_GUAGES.aveTellingsPer}}</span>
+      </v-avatar>
+      ave tellings per
       <!-- <router-link to="/dashboard/*:*">Dashboard</router-link> -->
       🌗 <span @click="_P = 'dashboard'">DASHB</span>
+      🌗 <span @click="_P = 'list'">LIST</span>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -127,7 +149,7 @@
           <v-list v-if="tells.payload.length > 0" lines="one">
             <v-list-item
               :key="tell._source.handle"
-              v-for="tell in tells.payload"
+              v-for="tell in tells.payload.slice(0,10)"
               ><v-list-item-title
                 ><strong>{{ tell._source.title }}</strong> ({{
                   tell._source.elucidation
@@ -231,6 +253,7 @@ provide(THEME_KEY, "light");
 
 const M = reactive({
   universe: {
+    stories:0,
     threedom_universe_classes: { buckets: [] },
     threedom_universe_tellings_count: { buckets: [] },
     threedom_universe_tags: { buckets: [] },
@@ -385,8 +408,8 @@ const getUniverse = async () => {
       "http://milleria.org:9200/threepeats/_search",
       qo
     );
-    console.log("res.data", res.data);
     M.universe = res.data.aggregations;
+    M.universe.total=res.data.hits.total.value;
     $R(`retrieved universe`);
   } catch (e) {
     $E(e);
@@ -396,8 +419,6 @@ const getUniverse = async () => {
 watch(
   () => [_Q.value],
   (newp, oldp) => {
-    console.log("old_q", oldp);
-    console.log("new_q", newp);
     $S();
     // uriBusiness();
   }
@@ -406,8 +427,6 @@ watch(
 watch(
   () => [_P.value],
   (newp, oldp) => {
-    console.log("old_P", oldp);
-    console.log("new_P", newp);
     $S();
     // uriBusiness();
   }
@@ -475,8 +494,8 @@ const $S = () => {
   ROUTER.push(r);
 };
 
-const _GUAGES = null; //{totalStories: M.universe.};
-console.log("_GUAGES", _GUAGES);
+// const _GUAGES = null; //{totalStories: M.universe.};
+// console.log("_GUAGES", _GUAGES);
 // const totalStories = AGGS.hits.total.value;
 
 // const totalTellings =
@@ -498,6 +517,37 @@ console.log("_GUAGES", _GUAGES);
 //     episodeKeys.length - 1
 //   ].key,
 // };
+
+
+/*
+
+                                          .g8"""bgd `7MMF'   `7MF'    db       .g8"""bgd `7MM"""YMM   .M"""bgd
+                                        .dP'     `M   MM       M     ;MM:    .dP'     `M   MM    `7  ,MI    "Y
+                                        dM'       `   MM       M    ,V^MM.   dM'       `   MM   d    `MMb.
+                                        MM            MM       M   ,M  `MM   MM            MMmmMM      `YMMNq.
+                                        MM.    `7MMF' MM       M   AbmmmqMA  MM.    `7MMF' MM   Y  , .     `MM
+                                        `Mb.     MM   YM.     ,M  A'     VML `Mb.     MM   MM     ,M Mb     dM
+                                          `"bmmmdPY    `bmmmmd"'.AMA.   .AMMA. `"bmmmdPY .JMMmmmmMMM P"Ybmmd"
+
+                                    mmmmmmm
+*/
+
+const _GUAGES = computed(() => {
+  let totalTellings=M.universe.threedom_universe_classes.buckets.reduce(
+     (accumulator, bucket) => {
+       return accumulator + bucket.doc_count;
+     },
+     0
+   );
+  return {totalStories: M.universe?.total,
+    totalTellings: totalTellings,
+    aveTellingsPer: (totalTellings/M.universe?.total).toFixed(2),
+    totalEpisodes: M.universe.threedom_universe_episodekeys?.buckets.length,
+    maxEpisode: M.universe.threedom_universe_episodekeys?.buckets.sort((a, b) => a.key - b.key)[
+      M.universe.threedom_universe_episodekeys.buckets.length - 1
+    ].key,
+  };
+});
 
 /*
 
