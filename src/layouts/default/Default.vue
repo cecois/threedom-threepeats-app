@@ -16,7 +16,7 @@
         {{ tclass.label }}
       </span>
 
-<!-- 
+      <!-- 
 _GUAGES
 totalStories
 totalTellings
@@ -25,25 +25,27 @@ totalEpisodes
 maxEpisode
  -->
       <v-avatar color="brown" size="x-large" variant="outlined">
-        <span class="font-weight-black">{{_GUAGES.totalEpisodes}}</span>
-      </v-avatar> (through {{_GUAGES.maxEpisode}})
+        <span class="font-weight-black">{{ _GUAGES.totalEpisodes }}</span>
+      </v-avatar>
+      (through {{ _GUAGES.maxEpisode }})
 
       <v-avatar color="brown" size="x-large" variant="outlined">
-        <span class="font-weight-black">{{_GUAGES.totalStories}}</span>
-      </v-avatar> stories
+        <span class="font-weight-black">{{ _GUAGES.totalStories }}</span>
+      </v-avatar>
+      stories
 
       <v-avatar color="brown" size="x-large" variant="outlined">
-        <span class="font-weight-black">{{_GUAGES.totalTellings}}</span>
+        <span class="font-weight-black">{{ _GUAGES.totalTellings }}</span>
       </v-avatar>
       tellings
 
       <v-avatar color="brown" size="x-large" variant="outlined">
-        <span class="font-weight-black">{{_GUAGES.aveTellingsPer}}</span>
+        <span class="font-weight-black">{{ _GUAGES.aveTellingsPer }}</span>
       </v-avatar>
       ave tellings per
       <!-- <router-link to="/dashboard/*:*">Dashboard</router-link> -->
-      🌗 <span @click="_P = 'dashboard'">DASHB</span>
-      🌗 <span @click="_P = 'list'">LIST</span>
+      🌗 <span @click="_P = 'dashboard'">DASHB</span> 🌗
+      <span @click="_P = 'list'">LIST</span>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -56,7 +58,8 @@ maxEpisode
           <!-- <v-sheet border rounded :height="250">dashitem1</v-sheet> -->
 
           <v-sheet class="py-6 text-center text-medium-emphasis">
-            (universe of all charts is all stories, regardless of current query)
+            (universe of all charts is all stories, regardless of current query,
+            <span class="font-weight-bold">excluding meta classes</span>)
           </v-sheet>
 
           <v-container class="">
@@ -146,17 +149,29 @@ maxEpisode
         <div v-if="_P.toLowerCase() == 'list'">
           <v-text-field v-model="_Q"></v-text-field>
 
+          <div class="text-center">
+            <v-pagination
+              v-model="M.page"
+              :length="M.pages"
+              rounded="circle"
+            ></v-pagination>
+          </div>
+
+          page {{ M.page }} of {{ M.pages }}; {{ tells.payload.length }} hits;
+          {{ `slice(${M.page + M.page}, ${M.page + (M.pageItems - M.page)})` }}
+
           <v-list v-if="tells.payload.length > 0" lines="one">
-            <v-list-item
-              :key="tell._source.handle"
-              v-for="tell in tells.payload.slice(0,10)"
+            <!-- v-for="tell in tells.payload.slice(0, 10)" -->
+            <!-- :key="tell._source.handle" -->
+            <v-list-item :key="tell._id" v-for="(tell, telli) in _payloadSubset"
               ><v-list-item-title
-                ><strong>{{ tell._source.title }}</strong> ({{
+                >({{ telli }} - {{ tell._id }})
+                <strong>{{ tell._source.title }}</strong> ({{
                   tell._source.elucidation
                 }})</v-list-item-title
               >
 
-              <v-list-item-subtitle>
+              <!-- <v-list-item-subtitle>
                 <div>
                   <v-list lines="one">
                     <v-list-item v-for="telling in tell._source.tellings">
@@ -176,7 +191,7 @@ maxEpisode
                     </v-list-item>
                   </v-list>
                 </div>
-              </v-list-item-subtitle>
+              </v-list-item-subtitle> -->
             </v-list-item>
           </v-list>
         </div>
@@ -252,8 +267,11 @@ provide(THEME_KEY, "light");
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 const M = reactive({
+  page: 1,
+  pageItems: 10,
+  pages: 0,
   universe: {
-    stories:0,
+    stories: 0,
     threedom_universe_classes: { buckets: [] },
     threedom_universe_tellings_count: { buckets: [] },
     threedom_universe_tags: { buckets: [] },
@@ -345,6 +363,16 @@ const tells = reactive({ payload: [] });
 
 const _QS = computed(() => `${_Q.value}`);
 
+const _payloadSubset = computed(() => {
+  // let page = 0;
+  // let pageItems = 10;
+  return (
+    tells.payload
+      //c.sort((ta, tb) => tb._source.tellings.length - ta._source.tellings.length)
+      .slice(M.page + M.pageItems, M.pageItems)
+  );
+});
+
 const $R = (m) => log.value.push(`${new Date()} - ${m}`);
 const $E = (m) => errors.value.push(`${new Date()} - ${m}`);
 
@@ -398,7 +426,7 @@ const getUniverse = async () => {
     },
     query: {
       function_score: {
-        query: { query_string: { query: "*:*" } },
+        query: { query_string: { query: "*:* AND isMeta:false" } },
       },
     },
   };
@@ -409,7 +437,7 @@ const getUniverse = async () => {
       qo
     );
     M.universe = res.data.aggregations;
-    M.universe.total=res.data.hits.total.value;
+    M.universe.total = res.data.hits.total.value;
     $R(`retrieved universe`);
   } catch (e) {
     $E(e);
@@ -420,6 +448,7 @@ watch(
   () => [_Q.value],
   (newp, oldp) => {
     $S();
+    $Q();
     // uriBusiness();
   }
 );
@@ -436,6 +465,21 @@ onMounted(() => {
   getUniverse();
   $Q();
 });
+
+/*
+                                                                                           .-''-.
+                                                                                          //'` `\|
+                                                                                         '/'    '|
+                                                                                        |'      '|
+                                                                                        ||     /||
+                                                                                         \'. .'/||
+                                                                                          `--'` ||
+                                                                                                ||
+                                                                                                || />
+                                                                                                ||//
+                                                                                                |'/
+                                                                                                |/
+*/
 
 const $Q = async () => {
   const qo = {
@@ -463,8 +507,12 @@ const $Q = async () => {
       "http://milleria.org:9200/threepeats/_search",
       qo
     );
-    tells.payload = res.data.hits.hits;
+    // tells.payload = res.data.hits.hits;
+    tells.payload = res.data.hits.hits
+      .sort((ta, tb) => tb._source.tellings.length - ta._source.tellings.length)
+      .sort((ta, tb) => tb._source.handle[0] - ta._source.handle[0]);
     $R(`retrieved ${tells.payload.length} tells for ${_QS.value}`);
+    M.pages = Math.round(tells.payload.length / M.pageItems + 0.5);
     $S(); //if it went well we wanna write back to the uri
     loading.value = false;
   } catch (e) {
@@ -494,31 +542,6 @@ const $S = () => {
   ROUTER.push(r);
 };
 
-// const _GUAGES = null; //{totalStories: M.universe.};
-// console.log("_GUAGES", _GUAGES);
-// const totalStories = AGGS.hits.total.value;
-
-// const totalTellings =
-//   AGGS.aggregations.threedom_universe_classes.buckets.reduce(
-//     (accumulator, bucket) => {
-//       return accumulator + bucket.doc_count;
-//     },
-//     0
-//   );
-
-// const episodeKeys = AGGS.aggregations.threedom_universe_episodes_w_key.buckets;
-
-// const O = {
-//   totalStories: totalStories,
-//   totalTellings: totalTellings,
-//   aveTellingsPer: totalTellings / totalStories,
-//   totalEpisodes: episodeKeys.length,
-//   maxEpisode: episodeKeys.sort((a, b) => a.key - b.key)[
-//     episodeKeys.length - 1
-//   ].key,
-// };
-
-
 /*
 
                                           .g8"""bgd `7MMF'   `7MF'    db       .g8"""bgd `7MM"""YMM   .M"""bgd
@@ -533,19 +556,20 @@ const $S = () => {
 */
 
 const _GUAGES = computed(() => {
-  let totalTellings=M.universe.threedom_universe_classes.buckets.reduce(
-     (accumulator, bucket) => {
-       return accumulator + bucket.doc_count;
-     },
-     0
-   );
-  return {totalStories: M.universe?.total,
+  let totalTellings = M.universe.threedom_universe_classes.buckets.reduce(
+    (accumulator, bucket) => {
+      return accumulator + bucket.doc_count;
+    },
+    0
+  );
+  return {
+    totalStories: M.universe?.total,
     totalTellings: totalTellings,
-    aveTellingsPer: (totalTellings/M.universe?.total).toFixed(2),
+    aveTellingsPer: (totalTellings / M.universe?.total).toFixed(2),
     totalEpisodes: M.universe.threedom_universe_episodekeys?.buckets.length,
-    maxEpisode: M.universe.threedom_universe_episodekeys?.buckets.sort((a, b) => a.key - b.key)[
-      M.universe.threedom_universe_episodekeys.buckets.length - 1
-    ].key,
+    maxEpisode: M.universe.threedom_universe_episodekeys?.buckets.sort(
+      (a, b) => a.key - b.key
+    )[M.universe.threedom_universe_episodekeys.buckets.length - 1].key,
   };
 });
 
@@ -592,7 +616,7 @@ const chartBarTellingTopTotal = computed(() => {
         .map((array) => array["tellings"])
         .flat()
         .sort((a, b) => b.value - a.value)
-        .slice(2, 12)
+        .slice(0, 10)
     : [];
 
   const minmax = mappedBuckets

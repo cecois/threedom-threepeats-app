@@ -19,6 +19,15 @@ curl -XPUT 'http://milleria.org:9200/threepeats'
 [ ] what episode features the most rehashed topics (forward and backward)
 [x] how many were pimped, acknowledged, etc.
 [x] tags
+
+=======
+
+HONORABLE MENTION:
+
+unjust spanking:
+punishment: s1e23,"Hamilton was Bae"
+incident:
+
 =======
 
 lauren wrecks stories
