@@ -4,24 +4,103 @@
  * Configures SASS variables and Vuetify overwrites
  */
 
-// https://next.vuetifyjs.com/features/sass-variables/`
-// @use 'vuetify' with (
-//   $color-pack: false
-// );
+@import url("https://fonts.googleapis.com/css2?family=Kanit&display=swap");
 
-$app-blue: #00a1e2;
-$app-yelo: #fdb812;
-$app-redd: #ca0204;
+/* https://coolors.co/f5dabd-252122-000000-d06a49-c1b5b0 */
+/* SCSS RGB */
+/*$light-orange: rgba(245, 218, 189, 1);
+$raisin-black: rgba(37, 33, 34, 1);
+$black: rgba(0, 0, 0, 1);
+$burnt-sienna: rgba(208, 106, 73, 1);
+$silver: rgba(193, 181, 176, 1);*/
+
+/* SCSS RGB */
+$smoky-black: rgba(18, 14, 14, 1);
+$raisin-black: rgba(37, 33, 34, 1);
+$taupe: rgba(75, 60, 50, 1);
+$ebony: rgba(107, 105, 90, 1);
+$silver: rgba(193, 181, 176, 1);
+$persian-red: rgba(192, 70, 55, 1);
+$burnt-sienna: rgba(208, 106, 73, 1);
+$atomic-tangerine: rgba(238, 165, 122, 1);
+$vanilla: rgba(243, 221, 158, 1);
+$antique-white: rgba(251, 230, 207, 1);
+
+$appWhite: white;
+$appWhiteOff: $silver;
+$appWhiteNot: $antique-white;
+$appBlack: $smoky-black;
+$appBlackOff: $raisin-black;
+$appBlackNot: $taupe;
+$appPrimary: $persian-red;
+$appSecondary: $vanilla;
+$appTertiary: $ebony;
+$appHighlight: $burnt-sienna;
+$appHighlightOff: $atomic-tangerine;
+
+.primary {
+    color: $appPrimary;
+}
+.secondary {
+    color: $appHighlight;
+}
+
+input {
+    font-family: "Kanit";
+    font-weight: 900;
+    font-size: 3em;
+    font-variant-caps: small-caps;
+}
 
 ::selection {
-    background: $app-blue; /* WebKit/Blink Browsers */
-    color: $app-yelo;
+    background: $appHighlight; /* WebKit/Blink Browsers */
+    color: $appWhiteOff;
 }
 ::-moz-selection {
-    background: $app-blue; /* Gecko Browsers */
-    color: $app-yelo;
+    background: $appHighlight; /* Gecko Browsers */
+    color: $appWhiteOff;
 }
 
 .v-list-item-subtitle {
     padding-left: 2em;
 }
+
+.bg-appHighlight {
+    background-color: $appHighlight;
+}
+
+.bg-appBlack {
+    background-color: $appBlack;
+}
+.bg-appBlackOff {
+    background-color: $appBlackOff;
+}
+.bg-appPrimary {
+    background-color: $appPrimary;
+}
+.bg-appWhiteOff {
+    background-color: $appWhiteOff;
+}
+.bg-appHighlight {
+    background-color: $appHighlight;
+}
+
+.copy-appBlack {
+    color: $appBlack;
+}
+.copy-appBlackOff {
+    color: $appBlackOff;
+}
+.copy-appPrimary {
+    color: $appPrimary;
+}
+.copy-appWhiteOff {
+    color: $appWhiteOff;
+}
+.copy-appHighlight {
+    color: $appHighlight;
+}
+
+/*:export {
+    burntSienna: $burnt-sienna;
+}*/
