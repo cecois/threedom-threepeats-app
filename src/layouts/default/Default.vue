@@ -18,28 +18,28 @@
       <v-row no-gutters>
         <v-col class="text-left" cols="6" align-self="start"> </v-col>
         <v-col class="text-center text-caption secondary" cols="1">
-          <v-avatar size="large" variant="outlined">
+          <v-avatar variant="outlined">
             <span class="font-weight-black">{{ _GUAGES.totalEpisodes }}</span>
           </v-avatar>
-          <span class="ml-2">episodes</span>
+          <p class="text-center text-caption">eps</p>
         </v-col>
         <v-col class="text-center text-caption secondary" cols="1">
-          <v-avatar size="large" variant="outlined">
+          <v-avatar variant="outlined">
             <span class="font-weight-black">{{ _GUAGES.totalStories }}</span>
           </v-avatar>
-          <span class="ml-2">stories</span>
+          <p class="text-center text-caption">stories</p>
         </v-col>
         <v-col class="text-center text-caption secondary" cols="1">
-          <v-avatar size="large" variant="outlined">
+          <v-avatar variant="outlined">
             <span class="font-weight-black">{{ _GUAGES.totalTellings }}</span>
           </v-avatar>
-          <span class="ml-2">tellings</span>
+          <p class="text-center text-caption">tellings</p>
         </v-col>
         <v-col class="text-center text-caption secondary" cols="1">
-          <v-avatar size="large" variant="outlined">
+          <v-avatar variant="outlined">
             <span class="font-weight-black">{{ _GUAGES.aveTellingsPer }}</span>
           </v-avatar>
-          <span class="ml-2">avg</span>
+          <p class="text-center text-caption">avg</p>
         </v-col>
       </v-row>
     </v-app-bar>
@@ -162,30 +162,6 @@
               </v-card>
             </v-col>
           </v-row>
-          <v-row class="pt-6">
-            <v-col cols="6">
-              <v-card class="mb-3">
-                <v-card-item>
-                  <v-card-title>What is this?</v-card-title>
-
-                  <v-card-subtitle>This is a subtitle</v-card-subtitle>
-                </v-card-item>
-
-                <v-card-text> This is content </v-card-text>
-              </v-card>
-            </v-col>
-            <v-col cols="6">
-              <v-card class="mb-3">
-                <v-card-item>
-                  <v-card-title>About the classes:</v-card-title>
-
-                  <v-card-subtitle>This is a subtitle</v-card-subtitle>
-                </v-card-item>
-
-                <v-card-text> This is content </v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
           <!-- //callbacks & references don't count - must be some flavor of
           retelling the story //unconsidered are instances when it's clear or
           implied that the story may have been told interpersonally or on some
@@ -270,16 +246,16 @@
 
         <div v-if="_P.toLowerCase() == 'search'">
           <v-row class="mt-16" justify="center" no-gutters>
-            <v-col class="text-center" cols="4"></v-col>
-            <v-col class="text-center" cols="4">
+            <v-col class="text-center" cols="2"></v-col>
+            <v-col class="text-center" cols="8">
               <v-text-field
                 clearable
                 v-model="_Q"
                 variant="solo"
               ></v-text-field>
             </v-col>
-            <v-col class="text-left pl-3 pb-3 align-self-end" cols="4"
-              ><v-switch
+            <v-col class="" cols="2"
+              ><!-- <v-switch
                 v-model="M.excludeMeta"
                 :color="COLORS.appHighlight"
                 hide-details
@@ -292,7 +268,28 @@
                 @click="M.excludeMeta = !M.excludeMeta"
                 hint="remove meta entries like 'inverted premise' and 'declined pimpings'"
               ></v-switch
-            ></v-col>
+            > --></v-col>
+          </v-row>
+          <v-row class="mt-n6" no-gutters>
+            <v-col class="text-center" cols="2"></v-col>
+            <v-col class="text-center justify-center" cols="8">
+              <v-switch 
+                v-model="M.excludeMeta"
+                :color="COLORS.appHighlight"
+                hide-details
+                density="compact"
+                :label="
+                  M.excludeMeta
+                    ? 'query excludes meta classes'
+                    : 'query includes meta classes'
+                "
+                @click="M.excludeMeta = !M.excludeMeta"
+                hint="remove meta entries like 'inverted premise' and 'declined pimpings'"
+              ></v-switch
+            >
+            </v-col>
+            <v-col class="text-left align-self-end" cols="2"
+              ></v-col>
           </v-row>
 
           <!--           <v-row>
@@ -313,9 +310,9 @@
           <v-list v-if="tells.payload.length > 0" lines="one">
             <v-list-item :key="tell._id" v-for="tell in _payloadSubset"
               ><v-list-item-title>
-                <strong>{{ tell._source.title }}</strong> ({{
-                  tell._source.elucidation
-                }})</v-list-item-title
+                <strong>{{ tell._source.title }}</strong> <div class="pl-2 text-caption font-weight-thin">({{
+                                  tell._source.elucidation
+                                }})</div></v-list-item-title
               >
 
               <v-list-item-subtitle>
@@ -576,7 +573,7 @@ const _tellingClassClass = [
     css: "mdi-source-pull",
   },
   {
-    anno: "(rare) cast member denies to tell a story requested by another",
+    anno: "(rare) cast member denies to tell a story prompted by another",
     annoExtendo:
       "the novelty here is that the pimped cast member actually declines and the conversation actually moves on",
     label: "Declined Pimp",
@@ -1073,18 +1070,35 @@ const chartTreeTellingTags = computed(() => {
       )
     ),
     (k, v) => {
-      return { name: v, value: k, link: "https://data.gov" };
+      console.log(k);
+      console.log(v);
+      return { name: v, value: k, link: `/search/tellings.tags:pets` };
     }
   );
 
   return {
     color: _values(COLORS),
+      tooltip: {
+        formatter: function (info) {
+          var value = info.value;
+          var treePathInfo = info.treePathInfo;
+          var treePath = [];
+          for (var i = 1; i < treePathInfo.length; i++) {
+            treePath.push(treePathInfo[i].name);
+          }
+          return [
+            '<div class="tooltip-title">' +
+              treePath.join('/') +
+              '</div>'
+          ].join('');
+        }
+      },
     series: [
       {
         type: "treemap",
         breadcrumb: { show: false },
         data: mappedTags,
-        nodeClick: "link",
+        nodeClick: "link"
       },
     ],
   };

@@ -38,6 +38,13 @@ $appTertiary: $ebony;
 $appHighlight: $burnt-sienna;
 $appHighlightOff: $atomic-tangerine;
 
+a{
+    text-decoration: none;color:$appPrimary;
+}
+    a:hover{
+        color:$appHighlightOff;
+    }
+
 .primary {
     color: $appPrimary;
 }
