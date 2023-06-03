@@ -20,3 +20,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+util/podcast-audio
+util/vosk-model-en-us-0.42-gigaspeech
