@@ -140,7 +140,7 @@
                   episodes, 'scuse me. But that's why they aren't linked - we
                   don't know where you listen and if the ads are in there the
                   timestamps are bunk anyway. Figure out the ad length, multiply
-                  by three er wutevr, then subtract...listen, figure it out.
+                  by three er wutevr, then subtract...listen, figure it out.z
                 </v-card-text>
               </v-card>
             </v-col>
