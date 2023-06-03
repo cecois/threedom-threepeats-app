@@ -127,6 +127,22 @@
                   scene, respectively.
                 </v-card-text>
               </v-card>
+
+              <v-card class="mb-3">
+                <v-card-item>
+                  <v-card-title>The Timestamps</v-card-title>
+
+                  <!-- <v-card-subtitle>This is a subtitle</v-card-subtitle> -->
+                </v-card-item>
+
+                <v-card-text
+                  >The timestamps on these records correspond to the ad-free
+                  episodes, 'scuse me. But that's why they aren't linked - we
+                  don't know where you listen and if the ads are in there the
+                  timestamps are bunk anyway. Figure out the ad length, multiply
+                  by three er wutevr, then subtract...listen, figure it out.
+                </v-card-text>
+              </v-card>
             </v-col>
             <v-col cols="8">
               <v-card class="mb-3">
@@ -268,12 +284,13 @@
                 @click="M.excludeMeta = !M.excludeMeta"
                 hint="remove meta entries like 'inverted premise' and 'declined pimpings'"
               ></v-switch
-            > --></v-col>
+            > --></v-col
+            >
           </v-row>
           <v-row class="mt-n6" no-gutters>
             <v-col class="text-center" cols="2"></v-col>
             <v-col class="text-center justify-center" cols="8">
-              <v-switch 
+              <v-switch
                 v-model="M.excludeMeta"
                 :color="COLORS.appHighlight"
                 hide-details
@@ -285,11 +302,9 @@
                 "
                 @click="M.excludeMeta = !M.excludeMeta"
                 hint="remove meta entries like 'inverted premise' and 'declined pimpings'"
-              ></v-switch
-            >
+              ></v-switch>
             </v-col>
-            <v-col class="text-left align-self-end" cols="2"
-              ></v-col>
+            <v-col class="text-left align-self-end" cols="2"></v-col>
           </v-row>
 
           <!--           <v-row>
@@ -310,9 +325,10 @@
           <v-list v-if="tells.payload.length > 0" lines="one">
             <v-list-item :key="tell._id" v-for="tell in _payloadSubset"
               ><v-list-item-title>
-                <strong>{{ tell._source.title }}</strong> <div class="pl-2 text-caption font-weight-thin">({{
-                                  tell._source.elucidation
-                                }})</div></v-list-item-title
+                <strong>{{ tell._source.title }}</strong>
+                <div class="pl-2 text-caption font-weight-thin">
+                  ({{ tell._source.elucidation }})
+                </div></v-list-item-title
               >
 
               <v-list-item-subtitle>
@@ -1078,27 +1094,25 @@ const chartTreeTellingTags = computed(() => {
 
   return {
     color: _values(COLORS),
-      tooltip: {
-        formatter: function (info) {
-          var value = info.value;
-          var treePathInfo = info.treePathInfo;
-          var treePath = [];
-          for (var i = 1; i < treePathInfo.length; i++) {
-            treePath.push(treePathInfo[i].name);
-          }
-          return [
-            '<div class="tooltip-title">' +
-              treePath.join('/') +
-              '</div>'
-          ].join('');
+    tooltip: {
+      formatter: function (info) {
+        var value = info.value;
+        var treePathInfo = info.treePathInfo;
+        var treePath = [];
+        for (var i = 1; i < treePathInfo.length; i++) {
+          treePath.push(treePathInfo[i].name);
         }
+        return [
+          '<div class="tooltip-title">' + treePath.join("/") + "</div>",
+        ].join("");
       },
+    },
     series: [
       {
         type: "treemap",
         breadcrumb: { show: false },
         data: mappedTags,
-        nodeClick: "link"
+        nodeClick: "link",
       },
     ],
   };
