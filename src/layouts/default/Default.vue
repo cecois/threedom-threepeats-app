@@ -46,7 +46,6 @@
     <v-main>
       <v-container>
         <div v-if="_P.toLowerCase() == 'about'">
-          <!-- 0. what is this? 1. retelling classes -->
           <v-row class="pt-6">
             <v-col cols="4">
               <v-card class="mb-3">
@@ -69,7 +68,6 @@
                 <v-card-item>
                   <v-card-title>What's its spirit?</v-card-title>
 
-                  <!-- <v-card-subtitle>This is a subtitle</v-card-subtitle> -->
                 </v-card-item>
 
                 <v-card-text
@@ -83,7 +81,6 @@
                 <v-card-item>
                   <v-card-title>How, though?</v-card-title>
 
-                  <!-- <v-card-subtitle>This is a subtitle</v-card-subtitle> -->
                 </v-card-item>
 
                 <v-card-text
@@ -130,17 +127,16 @@
 
               <v-card class="mb-3">
                 <v-card-item>
-                  <v-card-title>The Timestamps</v-card-title>
+                  <v-card-title>P.S. - The Timestamps</v-card-title>
 
-                  <!-- <v-card-subtitle>This is a subtitle</v-card-subtitle> -->
                 </v-card-item>
 
                 <v-card-text
                   >The timestamps on these records correspond to the ad-free
                   episodes, 'scuse me. But that's why they aren't linked - we
-                  don't know where you listen and if the ads are in there the
+                  don't know where you listen and if the ads are in your copies the
                   timestamps are bunk anyway. Figure out the ad length, multiply
-                  by three er wutevr, then subtract...listen, figure it out.z
+                  by three er wutevr, then subtr...listen, figure it out.
                 </v-card-text>
               </v-card>
             </v-col>
@@ -149,16 +145,15 @@
                 <v-card-item>
                   <v-card-title>The types:</v-card-title></v-card-item
                 >
+                <v-card-item>
+                <v-card-subtitle>
+                  A generic note over all of these classifications: callbacks and references generally do not count - we're mostly interested in a legitimately-repeated stories or topics (or an attempt to do so). Unconsidered are instances when it's clear or highly likely that the story may have been told interpersonally or on some other show, even. 
+          </v-card-subtitle></v-card-item
+                >
 
                 <v-card-text>
                   <v-list lines="three">
-                    <!--                     {
-    anno: "the first documented telling on *this* show",
-    annoExtendo: "there are plenty of cases where these three have shared a story off-mic and are bringing it on-mic <— this does not count as a retelling, counts as an inaugural story",
-    label: "Inaugural",
-    key: "inaugural",
-    css: "mdi-flare",
-  } -->
+
                     <v-list-item
                       v-for="classDef in _tellingClassClass"
                       :key="classDef.key"
@@ -178,10 +173,36 @@
               </v-card>
             </v-col>
           </v-row>
-          <!-- //callbacks & references don't count - must be some flavor of
-          retelling the story //unconsidered are instances when it's clear or
-          implied that the story may have been told interpersonally or on some
-          other show -->
+          
+
+          <v-row class="pt-6">
+            <v-col cols="12">
+              <v-card class="mb-3">
+                <v-card-item>
+                  <v-card-title>Who would do this?</v-card-title>
+                </v-card-item>
+
+                <v-card-text
+                  >I am an aged and wisened geospatial librarian. A huge fan of <a href="cbb.milleria.org">Comedy Bang! Bang!</a> from way back. <a href="http://dv.trainertothestarsseekingstars.org/">Andy Daly</a> also, no surprise. You are welcome to <a href="mailto:pugolian+threedom@gmail.com">contact me</a> about this or those projects, but I will be <em>shocked</em> one would need to do so.</v-card-text
+                >
+              </v-card>
+            </v-col></v-row>
+
+        </div>
+        <div v-if="_P.toLowerCase() == 'contribute'">
+          <v-row class="pt-6">
+            <v-col cols="1">
+              <v-card class="mb-12">
+                <v-card-item>
+                  <v-card-title>Contribute</v-card-title>
+                </v-card-item>
+
+                <v-card-text
+                  >llllll.</v-card-text
+                >
+              </v-card>
+            </v-col>
+          </v-row>
         </div>
         <div v-if="_P.toLowerCase() == 'dashboard'">
           <v-sheet class="py-6 text-center text-medium-emphasis">
