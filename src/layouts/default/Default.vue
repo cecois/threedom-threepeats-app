@@ -11,8 +11,26 @@
           @click.prevent="_P = _panel.menu"
           :class="['ml-3', _panel.menu == _P ? 'font-weight-black' : '']"
           :value="_panel.menu"
-          >{{ _panel.label }}</v-tab
+          >
+          <v-badge v-if="_panel.label.toLowerCase()=='search' && newResultsBadge"
+        :color="COLORS.celadon"
+        dot
+      >
+      {{ _panel.label }}
+      </v-badge>
+      <span v-else>{{ _panel.label }}</span>
+      </v-tab
         >
+        <!-- <v-tab
+          v-for="_panel in PANELS.filter(p=>p.label.toLowerCase()!=='search')"
+          selected-class="''"
+          @click.prevent="_P = _panel.menu"
+          :class="['ml-3', _panel.menu == _P ? 'font-weight-black' : '']"
+          :value="_panel.menu"
+          >
+          {{ _panel.label }}
+      </v-tab
+        > -->
       </v-tabs>
 
       <v-row no-gutters>
@@ -116,8 +134,7 @@
                   <em>fueled</em>
                   by interruption and crosstalk and voices and screaming. And
                   the singing - godam, all the singing. Moreover, the
-                  transcriber has trouble identifying proper nouns like "DJ
-                  Qualls" and common sounds like "pie" so it's hard to locate
+                  transcriber has trouble identifying proper nouns like "<a @click.prevent="_Q='tellings.tags:butkus'" href="">Dick Butkus</a>" and common sounds like "pie" so it's hard to locate
                   all the times Lauren hasn't shut the fuk up about her
                   doppelgänger or all the times Scott hasn't shut the fuk up
                   about eating multiple pies during the filming of a single
@@ -229,6 +246,7 @@
                     <v-chart
                       class="chart"
                       :option="chartPieTellingClasses"
+                      @click.default="chartPieClassClick"
                       autoresize
                     />
                   </v-card>
@@ -267,6 +285,7 @@
                     <v-chart
                       class="chart"
                       :option="chartTreeTellingTags"
+                      @click.default="chartTreeTagClick"
                       autoresize
                     />
 
@@ -281,6 +300,34 @@
         </div>
         <!-- ./dashboard -->
 
+        <div v-if="_P.toLowerCase() == 'api'">
+          <v-row class="pt-6">
+            <v-col cols="12">
+              <v-card class="mb-3">
+                <v-card-item>
+                  <v-card-title>API Access</v-card-title>
+                </v-card-item>
+
+                <v-card-text
+                  >So to speak, anyway. If anybody happens to be interested in making their own thing on top of the data I'm collecting, it would be somewhat easy to do so. (Excepting that it's codified specifically to mark and present retellings) all of the stuff is available in an <a href="http://milleria.org:9200/threepeats/_search?size=9&q=*:*">open ElasticSearch index</a>, supporting whatever Elastic supports out of the box. (See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/rest-apis.html">Elastic docs</a>).
+                  </v-card-text
+                >
+              </v-card>
+            </v-col></v-row>
+            <v-row class="pt-6">
+            <v-col cols="12">
+              <v-card class="mb-3">
+                <v-card-item>
+                  <v-card-title>Transcripts</v-card-title>
+                </v-card-item>
+
+                <v-card-text
+                  >Y'all could of course transcribe your own episode audio, but if anybody wants mine <a href="mailto:pugolian+threedom@gmail.com">let me know</a> and we can arrange for that.
+                  </v-card-text
+                >
+              </v-card>
+            </v-col></v-row>
+          </div>
         <div v-if="_P.toLowerCase() == 'search'">
           <v-row class="mt-16" justify="center" no-gutters>
             <v-col class="text-center" cols="2"></v-col>
@@ -505,6 +552,7 @@ provide(THEME_KEY, "light");
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const snackbar = true;
+const resultsAreIn=ref(false);
 const M = reactive({
   excludeMeta: true,
   page: 1,
@@ -540,7 +588,7 @@ const PANELS = [
   { menu: "search", label: "Search" },
   { menu: "dashboard", label: "Dashboard" },
   { menu: "about", label: "About" },
-  { menu: "contribute", label: "Contribute" },
+  // { menu: "contribute", label: "Contribute" },
   // { menu: "forthcoming", label: "Forthcoming" },
   { menu: "api", label: "API" },
 ];
@@ -668,11 +716,16 @@ const _QS = computed(() =>
   M.excludeMeta ? `${_Q.value} AND NOT isMeta:true` : `${_Q.value}`
 );
 
+const newResultsBadge = computed(() => {
+  // if search isnt current pane AND there are new results in
+  return (_P.value !== 'search' && resultsAreIn.value);
+});//newresultsbadge
+
 const _payloadSubset = computed(() => {
   let from = (M.page - 1) * M.pageItems + 1;
   let to = M.page * M.pageItems;
 
-  return tells.payload.slice(from, to);
+return tells.payload.length<M.pageItems?tells.payload:tells.payload.slice(from, to);
 });
 
 const $R = (m) => log.value.push(`${new Date()} - ${m}`);
@@ -788,6 +841,8 @@ watch(
 watch(
   () => [_P.value],
   (newp, oldp) => {
+    // if we're switching to the search pane we wanna blank out resultsAreIn (which is merely a flag to indicate, in non-query space, that the query has changed the resultset)
+    resultsAreIn.value=newp[0]=='search'?false:resultsAreIn.value;
     $S();
   }
 );
@@ -814,6 +869,7 @@ onMounted(() => {
 
 const $Q = async () => {
   loading.value = true;
+    resultsAreIn.value=false;
   try {
     const res = await axios.get(
       `http://milleria.org:9200/threepeats/_search?size=9999&q=${_QS.value}`
@@ -824,6 +880,7 @@ const $Q = async () => {
       .sort((ta, tb) => tb._source.key[0] - ta._source.key[0]);
     $R(`retrieved ${tells.payload.length} tells for ${_QS.value}`);
     M.pages = Math.round(tells.payload.length / M.pageItems + 0.5);
+    resultsAreIn.value=_P.value=='search'?false:true;
     $S(); //if it went well we wanna write back to the uri
     loading.value = false;
   } catch (e) {
@@ -1034,6 +1091,7 @@ const chartBarTellingTopTotal = computed(() => {
       (s) => {
         return {
           value: s.tellingsLength,
+          key: "s.tellingsLength",
           name: `${s.title} (${s.tellingsLength})`,
           elucidation: s.elucidation,
           tellingsLength: s.tellingsLength,
@@ -1095,6 +1153,15 @@ const chartBarTellingTopTotal = computed(() => {
   };
 }); //chartbartellingtoptotal
 
+const chartTreeTagClick=(v,x,y)=>{
+_Q.value = `tellings.tags:${v.data.name}`;
+}
+
+const chartPieClassClick=(v,x,y)=>{
+  let translation=_tellingClassClass.find({label:v.data.name}).key
+_Q.value = `tellings.class:${translation}`;
+}
+
 const chartTreeTellingTags = computed(() => {
   const mappedTags = _map(
     _countBy(
@@ -1107,9 +1174,9 @@ const chartTreeTellingTags = computed(() => {
       )
     ),
     (k, v) => {
-      console.log(k);
-      console.log(v);
-      return { name: v, value: k, link: `/search/tellings.tags:pets` };
+      return { name: v, value: k
+      // , link: `/search/tags:pets`,target:"blank" 
+    };
     }
   );
 
@@ -1132,8 +1199,8 @@ const chartTreeTellingTags = computed(() => {
       {
         type: "treemap",
         breadcrumb: { show: false },
-        data: mappedTags,
-        nodeClick: "link",
+        data: mappedTags
+        // ,nodeClick: "link"
       },
     ],
   };
