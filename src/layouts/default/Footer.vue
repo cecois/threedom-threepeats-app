@@ -15,6 +15,7 @@
         ©️ {{ new Date().getFullYear() }} — <strong>C.C. Miller</strong>
       </v-col> -->
     </v-row>
+    <v-row>no copyright infringement is intended</v-row>
   </v-footer>
 </template>
 
