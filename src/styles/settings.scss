@@ -38,18 +38,23 @@ $appTertiary: $ebony;
 $appHighlight: $burnt-sienna;
 $appHighlightOff: $atomic-tangerine;
 
-a{
-    text-decoration: none;color:$appPrimary;
+a {
+    text-decoration: none;
+    color: $appPrimary;
+    cursor: pointer;
 }
-    a:hover{
-        color:$appHighlightOff;
-    }
+a:hover {
+    color: $appHighlightOff;
+}
 
 .primary {
     color: $appPrimary;
 }
 .secondary {
     color: $appHighlight;
+}
+.tertiary {
+    color: $appWhiteOff;
 }
 
 input {

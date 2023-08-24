@@ -1,9 +1,15 @@
 <template>
   <v-app>
-    <v-system-bar height="30" class="bg-app-offblack copy-app-primary">
-      {{ _GUAGES.currentHits }} • {{ _GUAGES.maxEpisode }} • v1.0
-    </v-system-bar>
+    <!--     <v-system-bar height="30" class="bg-app-offblack copy-appWhiteOff">
+      <span class="threedom-h4 pr-6 font-weight-black pr-1"
+        >THREEDOM THREEPEATS</span
+      >
+    </v-system-bar> -->
     <v-app-bar>
+      <img class="" src="/logo.svg" />
+      <span class="threedom-h5 pl-6 font-weight-black pr-1 text-h6"
+        >THREEDOM THREEPEATS</span
+      >
       <v-tabs v-model="tab">
         <v-tab
           v-for="_panel in PANELS"
@@ -36,26 +42,36 @@
       <v-row no-gutters>
         <v-col class="text-left" cols="6" align-self="start"> </v-col>
         <v-col class="text-center text-caption secondary" cols="1">
+          <!--   <span :color="COLORS.celadon" class="font-weight-black pr-1">{{
+        
+      }}</span>
+      + {{ _GUAGES.maxEpisode }} • <span class="font-weight-thin">v1.0</span> -->
           <v-avatar variant="outlined">
-            <span class="font-weight-black">{{ _GUAGES.totalEpisodes }}</span>
+            <span class="font-weight-black">{{ _GUAGES.currentHits }}</span>
+          </v-avatar>
+          <p class="text-center text-caption">hits</p>
+        </v-col>
+        <v-col class="text-center text-caption tertiary" cols="1">
+          <v-avatar variant="outlined">
+            <span class="">{{ _GUAGES.totalEpisodes }}</span>
           </v-avatar>
           <p class="text-center text-caption">eps</p>
         </v-col>
-        <v-col class="text-center text-caption secondary" cols="1">
+        <v-col class="text-center text-caption tertiary" cols="1">
           <v-avatar variant="outlined">
-            <span class="font-weight-black">{{ _GUAGES.totalStories }}</span>
+            <span class="">{{ _GUAGES.totalStories }}</span>
           </v-avatar>
           <p class="text-center text-caption">stories</p>
         </v-col>
-        <v-col class="text-center text-caption secondary" cols="1">
+        <v-col class="text-center text-caption tertiary" cols="1">
           <v-avatar variant="outlined">
-            <span class="font-weight-black">{{ _GUAGES.totalTellings }}</span>
+            <span class="">{{ _GUAGES.totalTellings }}</span>
           </v-avatar>
           <p class="text-center text-caption">tellings</p>
         </v-col>
-        <v-col class="text-center text-caption secondary" cols="1">
+        <v-col class="text-center text-caption tertiary" cols="1">
           <v-avatar variant="outlined">
-            <span class="font-weight-black">{{ _GUAGES.aveTellingsPer }}</span>
+            <span class="">{{ _GUAGES.aveTellingsPer }}</span>
           </v-avatar>
           <p class="text-center text-caption">avg</p>
         </v-col>
@@ -63,28 +79,56 @@
     </v-app-bar>
     <v-main>
       <v-container>
-        <div v-if="_P.toLowerCase() == 'about'">
+        <div v-if="_P.toLowerCase() == 'wha?'">
           <v-row class="pt-6">
             <v-col cols="4">
-              <v-card class="mb-3">
+              <v-card class="mb-3 threedomcard" variant="outlined">
+                <v-img
+                  src="@/assets/Screen-Shot-2018-04-12-at-2.58.10-PM-936x527-edit.jpg"
+                  cover
+                  max-height="130"
+                  class="threedomcardimg"
+                />
                 <v-card-item>
-                  <v-card-title>What is this?</v-card-title>
+                  <v-card-title class="threedom-h4">WHAT IS THIS?</v-card-title>
 
                   <!-- <v-card-subtitle>This is a subtitle</v-card-subtitle> -->
                 </v-card-item>
 
                 <v-card-text
-                  ><em>Threedom</em> is a podcast. Its hosts tend to repeat
-                  their stories and their takes on this or that topic —
-                  self-driving cars, beanie babies, restaurants, MRSA
-                  infections, and so forth — and at one point wished aloud that
-                  there was a log of those recurrences. This is that
-                  log.</v-card-text
+                  ><em
+                    ><a href="https://www.earwolf.com/show/threedom/"
+                      >Threedom</a
+                    ></em
+                  >
+                  is a podcast. Its hosts tend to repeat their stories and their
+                  takes on this or that topic —
+                  <a
+                    @click.prevent="
+                      _Q = `key:&quot;it-s-like-with-bathrooms&quot;`
+                    "
+                    >self-driving cars</a
+                  >,
+                  <a @click.prevent="_Q = `key:&quot;it-s-a-purple-bear&quot;`"
+                    >beanie babies</a
+                  >,
+                  <a @click.prevent="_Q = `key:&quot;grapefruit-spoon&quot;`"
+                    >MRSA infections</a
+                  >, and so forth — and at one point wished aloud that there was
+                  a log of those recurrences. This is that log.</v-card-text
                 >
               </v-card>
-              <v-card class="mb-3">
+              <v-card class="mb-3 threedomcard" variant="outlined">
+                <v-img
+                  src="@/assets/tumblr_px2b2jaGyH1qzu9gno1_500-edit.jpg"
+                  cover
+                  max-height="150"
+                  class="threedomcardimg"
+                />
                 <v-card-item>
-                  <v-card-title>What's its spirit?</v-card-title>
+                  <v-card-title class="threedom-h4"
+                    >WHAT'S ITS SPIRIT?</v-card-title
+                  >
                 </v-card-item>
 
                 <v-card-text
@@ -94,9 +138,15 @@
                   letter to the show and its hosts.</v-card-text
                 >
               </v-card>
-              <v-card class="mb-3">
+              <v-card class="mb-3 threedomcard" variant="outlined">
+                <v-img
+                  src="@/assets/tumblr_px09fgaz1b1qzbiu4o1_1280-edit.jpg"
+                  cover
+                  max-height="150"
+                  class="threedomcardimg"
+                />
                 <v-card-item>
-                  <v-card-title>How, though?</v-card-title>
+                  <v-card-title class="threedom-h4">HOW, THOUGH?</v-card-title>
                 </v-card-item>
 
                 <v-card-text
@@ -131,46 +181,90 @@
                   transcription is only so good of a show that is basically
                   <em>fueled</em>
                   by interruption and crosstalk and voices and screaming. And
-                  the singing - godam, all the singing. Moreover, the
-                  transcriber has trouble identifying proper nouns like "<a
+                  the singing - all the singing. Moreover, the transcriber has
+                  trouble identifying proper nouns like "<a
                     @click.prevent="_Q = 'tags:butkus'"
                     href=""
                     >Dick Butkus</a
-                  >" and common sounds like "pie" so it's hard to locate all the
-                  times Lauren hasn't shut the fuk up about her doppelgänger or
-                  all the times Scott hasn't shut the fuk up about eating
-                  multiple pies during the filming of a single scene,
-                  respectively.
+                  >" and acronyms like MRSA and common sounds like "pie" so it's
+                  hard to locate all the times Paul hasn't shut the fuk up about
+                  his chronic
+                  <a @click.prevent="_Q = 'tags:mrsa'" href=""
+                    >Methicillin-resistant Staphylococcus Aureus</a
+                  >
+                  infections or all the times Lauren hasn't shut the fuk up
+                  about DJ Qualls or all the times Scott hasn't shut the fuk up
+                  about eating multiple pies during the filming of a single
+                  scene.
                 </v-card-text>
               </v-card>
 
-              <v-card class="mb-3">
+              <v-card class="mb-3 threedomcard" variant="outlined">
+                <v-img
+                  src="@/assets/tumblr_pfnb4lLAvD1qzu9gno1_1280-edit.jpg"
+                  cover
+                  max-height="150"
+                  class="threedomcardimg"
+                />
                 <v-card-item>
-                  <v-card-title>P.S. - The Timestamps</v-card-title>
+                  <v-card-title class="threedom-h4"
+                    >P.S. - THE TIMESTAMPS</v-card-title
+                  >
                 </v-card-item>
 
                 <v-card-text
                   >The timestamps on these records correspond to the ad-free
-                  episodes, 'scuse me. But that's why they aren't linked - we
-                  don't know where you listen and if the ads are in your copies
-                  the timestamps are bunk anyway. Figure out the ad length,
-                  multiply by three er wutevr, then subtr...listen, figure it
-                  out.
+                  episodes, '<a href="https://www.patreon.com/askronna"
+                    >scuse me</a
+                  >. But that's why they aren't linked - I don't know where you
+                  listen and if there are ads in your copies the timestamps are
+                  bunk anyway. Clock the ad length, multiply by three er wutevr,
+                  then subtr...listen, figure it out. You aren't reading this
+                  anyway.
                 </v-card-text>
               </v-card>
             </v-col>
             <v-col cols="8">
-              <v-card class="mb-3">
+              <v-card class="mb-3 threedomcard" variant="outlined">
+                <!-- <v-img
+                  src="@/assets/Screen-Shot-2018-04-12-at-2.58.10-PM-936x527-edit.jpg"
+                  cover
+                  max-height="130"
+                  class="threedomcardimg"
+                /> -->
                 <v-card-item>
-                  <v-card-title>The types:</v-card-title></v-card-item
+                  <v-card-title class="threedom-h4"
+                    >A NOTE ABOUT THE CLASSES</v-card-title
+                  >
+
+                  <!-- <v-card-subtitle>This is a subtitle</v-card-subtitle> -->
+                </v-card-item>
+
+                <v-card-text
+                  >There are meta classes in this set. For example, "premise"
+                  and "invertedPremise" mark instances when the cast acknowledge
+                  that they repeat stories or suspect they're retelling a story
+                  but are not, respectively.
+                  <span class="font-weight-bold"
+                    >These meta classes are *not* included in any of the
+                    charting or analysis.</span
+                  ></v-card-text
+                >
+              </v-card>
+
+              <v-card class="mb-3 threedomcard" variant="outlined">
+                <v-card-item>
+                  <v-card-title class="threedom-h4"
+                    >THE CLASSES:</v-card-title
+                  ></v-card-item
                 >
                 <v-card-item>
                   <v-card-subtitle class="text-wrap">
-                    A generic note over all of these classifications: callbacks
-                    and references generally do not count - we're mostly
-                    interested in a legitimately-repeated stories or topics (or
-                    an attempt to do so). Unconsidered are instances when it's
-                    clear or highly likely that the story may have been told
+                    <em>Note bene</em> about all of these classifications:
+                    callbacks and references generally do not count - I am
+                    mostly interested in a legitimately-repeated stories or
+                    topics (or an attempt to do so). Ignored also are instances
+                    when it's clear or highly likely that the story was told
                     interpersonally or on some other show, even.
                   </v-card-subtitle></v-card-item
                 >
@@ -199,16 +293,24 @@
 
           <v-row class="pt-6">
             <v-col cols="12">
-              <v-card class="mb-3">
+              <v-card class="mb-3 threedomcard" variant="outlined">
+                <v-img
+                  src="@/assets/Screen-Shot-2018-04-12-at-2.58.10-PM-936x527-edit.jpg"
+                  cover
+                  max-height="130"
+                  class="threedomcardimg"
+                />
                 <v-card-item>
-                  <v-card-title>Who would do this?</v-card-title>
+                  <v-card-title class="threedom-h4"
+                    >WHO WOULD DO THIS?</v-card-title
+                  >
                 </v-card-item>
 
                 <v-card-text
                   >I am an information professional at an esteemed
                   <a href="https://www.nsf.gov/statistics/ffrdclist/">FFRDC</a>
                   but also a huge fan of
-                  <a href="cbb.milleria.org">Comedy Bang! Bang!</a> from way
+                  <a href="//cbb.milleria.org">Comedy Bang! Bang!</a> from way
                   back.
                   <a href="http://dv.trainertothestarsseekingstars.org/"
                     >Andy Daly</a
@@ -221,13 +323,42 @@
               </v-card>
             </v-col></v-row
           >
+
+          <v-row class="pt-6">
+            <v-col cols="12">
+              <v-card class="mb-3 threedomcard" variant="outlined">
+                <v-card-item>
+                  <v-card-title class="threedom-h4">CREDITS</v-card-title>
+                </v-card-item>
+
+                <v-card-text
+                  >I mean *I* did all the work, but I did also lift a few images
+                  from tumblr and Earwolf. No copyright infringement is intended
+                  - I'm just trying to tribute something that is a billion units
+                  of joy. I still wanna cite, tho:
+                  <span
+                    v-for="(im, ii) in [
+                      'https://pbs.twimg.com/media/ELCy_IoUUAEhIsA.jpg',
+                      'https://64.media.tumblr.com/0e5c80e0ec426d29c6dae0552463a38a/tumblr_pfnb4lLAvD1qzu9gno1_1280.jpg',
+                      'https://64.media.tumblr.com/153a4e9f238141d138d8dd38d589e4a1/tumblr_px2b2jaGyH1qzu9gno1_500.jpg',
+                      'https://paulftompkins.com/post/187378197154/its-threedom-thrursday-threepsiode-46-the',
+                      'https://cdn.shopify.com/s/files/1/1850/0373/products/new_H883352PA_ThreedomHeadsShoeCharmWEB.jpg?v=1617143416',
+                    ]"
+                  >
+                    <a :href="im"> {{ ii }}</a
+                    >&nbsp;
+                  </span>
+                </v-card-text>
+              </v-card>
+            </v-col></v-row
+          >
         </div>
         <div v-if="_P.toLowerCase() == 'contribute'">
           <v-row class="pt-6">
             <v-col cols="1">
               <v-card class="mb-12">
                 <v-card-item>
-                  <v-card-title>Contribute</v-card-title>
+                  <v-card-title class="threedom-h4">CONTRIBUTE</v-card-title>
                 </v-card-item>
 
                 <v-card-text>llllll.</v-card-text>
@@ -238,7 +369,7 @@
         <div v-if="_P.toLowerCase() == 'dashboard'">
           <v-sheet class="py-6 text-center text-medium-emphasis">
             (universe of all charts is all stories, regardless of current query,
-            <a @click.prevent="_P = 'about'" href="#" class="font-weight-bold"
+            <a @click.prevent="_P = 'wha?'" href="#" class="font-weight-bold"
               >excluding meta classes</a
             >)
           </v-sheet>
@@ -248,9 +379,7 @@
               <v-col>
                 <v-sheet>
                   <v-card style="height: 50vh">
-                    <v-card-title class="text-h5">
-                      RETELLING CLASSES
-                    </v-card-title>
+                    <v-card-title class="text-h5"> BY CLASS </v-card-title>
 
                     <v-card-subtitle
                       class="pl-6"
@@ -269,7 +398,7 @@
               <v-col>
                 <!-- <v-sheet> -->
                 <v-card style="height: 70vh">
-                  <v-card-title class="text-h5"> TOP TELLINGS </v-card-title>
+                  <v-card-title class="text-h5"> BY VOLUME </v-card-title>
 
                   <v-card-subtitle
                     class="pl-6"
@@ -278,6 +407,7 @@
                   <v-chart
                     class="chart"
                     :option="chartBarTellingTopTotal"
+                    @click.default="chartBarTitleClick"
                     autoresize
                   />
                 </v-card>
@@ -289,7 +419,7 @@
               <v-col>
                 <v-sheet>
                   <v-card density="compact">
-                    <v-card-title class="text-h5"> TELLING TAGS </v-card-title>
+                    <v-card-title class="text-h5"> BY TAG </v-card-title>
 
                     <v-card-subtitle
                       class="pl-6"
@@ -316,18 +446,37 @@
 
         <div v-if="_P.toLowerCase() == 'api'">
           <v-row class="pt-6">
-            <v-col cols="12">
-              <v-card class="mb-3">
+            <v-col cols="6">
+              <v-card class="mb-3" variant="outlined">
                 <v-card-item>
-                  <v-card-title>API Access</v-card-title>
+                  <v-card-title>API ACCESS</v-card-title>
+                </v-card-item>
+
+                <v-card-text
+                  >You are free to query for whatever comes to mind.
+                  <a @click.prevent="_Q = `Cordiale`">Cordiale</a> or
+                  <a @click.prevent="_Q = `barf`">barf</a>
+                  or something - an unkeyed search, while still only querying
+                  the retellings data (i.e. not fulltext transcripts), will find
+                  tags and notes at least.
+                </v-card-text>
+              </v-card>
+            </v-col></v-row
+          >
+
+          <v-row class="pt-6"
+            ><v-col cols="6">
+              <v-card class="mb-3" variant="outlined">
+                <v-card-item>
+                  <v-card-title>API ACCESS</v-card-title>
                 </v-card-item>
 
                 <v-card-text
                   >So to speak, anyway. If anybody happens to be interested in
                   making their own thing on top of the data I'm collecting, it
-                  would be somewhat easy to do so. (Excepting that it's codified
-                  specifically to mark and present retellings) all of the stuff
-                  is available in an
+                  would be somewhat easy to do so. With the caveat that it's
+                  codified solely and specifically to mark and present
+                  retellings, all of the stuff is available in an
                   <a
                     href="http://milleria.org:9200/threepeats/_search?size=9&q=*:*"
                     >open ElasticSearch index</a
@@ -337,22 +486,65 @@
                     >Elastic docs</a
                   >).
                 </v-card-text>
-              </v-card>
-            </v-col></v-row
-          >
-          <v-row class="pt-6">
-            <v-col cols="12">
-              <v-card class="mb-3">
+              </v-card> </v-col
+            ><v-col cols="6">
+              <v-card class="mb-3" variant="outlined">
                 <v-card-item>
-                  <v-card-title>Transcripts</v-card-title>
+                  <v-card-title>TRANSCRIPTS</v-card-title>
                 </v-card-item>
 
                 <v-card-text
                   >Y'all could of course transcribe your own episode audio, but
-                  if anybody wants mine
-                  <a href="mailto:pugolian+threedom@gmail.com">let me know</a>
-                  and we can arrange for that.
+                  if anybody wants mine they're
+                  <a
+                    href="https://github.com/cecois/threedom-threepeats/tree/main/transcripts"
+                    >here</a
+                  >.
                 </v-card-text>
+              </v-card>
+            </v-col></v-row
+          >
+        </div>
+        <div v-if="_P.toLowerCase() == 'bonus'">
+          <v-row class="pt-6">
+            <v-col cols="3">
+              <v-card class="mb-3 threedomcard" variant="outlined">
+                <v-img
+                  src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
+                  style="left: -22px"
+                  cover
+                  max-height="120"
+                  min-width="555"
+                  class="threedomcardimg"
+                />
+                <v-card-item>
+                  <v-card-title class="threedom-h4">SPOTIFY</v-card-title>
+                </v-card-item>
+
+                <v-card-text
+                  >The cast reference songs sometimes.
+                  <a
+                    href="https://open.spotify.com/playlist/3uaii7SxiC30LO4IqjGlpS?si=8d7cc503306e42fa"
+                    >Here is a Spotify playlist</a
+                  >
+                  of every single one (including some offline stuff like
+                  commercial jingles and memes).</v-card-text
+                >
+              </v-card>
+            </v-col></v-row
+          >
+
+          <v-row class="pt-6">
+            <v-col cols="6">
+              <v-card class="mb-3" variant="outlined">
+                <v-card-item>
+                  <v-card-title>BONUS</v-card-title>
+                </v-card-item>
+
+                <v-card-text
+                  >special transcriptions (lists and threeture
+                  stuff)</v-card-text
+                >
               </v-card>
             </v-col></v-row
           >
@@ -440,7 +632,7 @@
                     <v-list-item
                       v-for="telling in _sortBy(
                         tell._source.tellings,
-                        (t) => t.episode.key
+                        (t) => t.episode.key,
                       )"
                     >
                       <v-icon
@@ -450,7 +642,7 @@
                             ? _tellingClassClass.find(
                                 (c) =>
                                   c.key.toLowerCase() ==
-                                  telling.class.toLowerCase()
+                                  telling.class.toLowerCase(),
                               )?.css
                             : 'mdi-alert-octagon-outline'
                         "
@@ -616,10 +808,11 @@ const COLORS = {
 const PANELS = [
   { menu: "search", label: "Search" },
   { menu: "dashboard", label: "Dashboard" },
-  { menu: "about", label: "About" },
+  { menu: "wha?", label: "Wha?" },
   // { menu: "contribute", label: "Contribute" },
   // { menu: "forthcoming", label: "Forthcoming" },
   { menu: "api", label: "API" },
+  { menu: "bonus", label: "Bonus" },
 ];
 
 const VIZS = [
@@ -633,7 +826,7 @@ const VIZS = [
   },
   {
     key: "tellingtags",
-    anno: "aggregated tags from all tellings (non-meta)",
+    anno: "aggregated tags from all tellings",
   },
 ];
 
@@ -748,7 +941,6 @@ const _QS = computed(() => {
   let qv = _Q.value
     .replace(/class:/g, "tellings.class:")
     .replace(/tags:/g, "tellings.tags:");
-  console.log("qv", qv);
   // return M.excludeMeta ? `${_Q.value} AND NOT isMeta:true` : `${_Q.value}`;
   return M.excludeMeta ? `${qv} AND NOT isMeta:true` : `${qv}`;
 });
@@ -794,7 +986,7 @@ const getUniverse = async () => {
   try {
     const res = await axios.post(
       "http://milleria.org:9200/threepeats/_search",
-      qo
+      qo,
     );
     M.universe.hits = res.data.hits;
     M.universe.total = res.data.hits.total.value;
@@ -859,7 +1051,7 @@ const getUniverseElasticAggs = async () => {
   try {
     const res = await axios.post(
       "http://milleria.org:9200/threepeats/_search",
-      qo
+      qo,
     );
     M.universe = res.data.aggregations;
     M.universe.total = res.data.hits.total.value;
@@ -874,7 +1066,7 @@ watch(
   (newp, oldp) => {
     $S();
     $Q();
-  }
+  },
 );
 
 watch(
@@ -883,7 +1075,14 @@ watch(
     // if we're switching to the search pane we wanna blank out resultsAreIn (which is merely a flag to indicate, in non-query space, that the query has changed the resultset)
     resultsAreIn.value = newp[0] == "search" ? false : resultsAreIn.value;
     $S();
-  }
+  },
+);
+
+watch(
+  () => _props.panel,
+  (newp, oldp) => {
+    _P.value = newp;
+  },
 );
 
 onMounted(() => {
@@ -911,7 +1110,7 @@ const $Q = async () => {
   resultsAreIn.value = false;
   try {
     const res = await axios.get(
-      `http://milleria.org:9200/threepeats/_search?size=9999&q=${_QS.value}`
+      `http://milleria.org:9200/threepeats/_search?size=9999&q=${_QS.value}`,
     );
 
     tells.payload = res.data.hits.hits
@@ -952,7 +1151,7 @@ const $QOG = async () => {
   try {
     const res = await axios.post(
       "http://milleria.org:9200/threepeats/_search",
-      qo
+      qo,
     );
     // tells.payload = res.data.hits.hits;
     tells.payload = res.data.hits.hits
@@ -1005,14 +1204,14 @@ const $S = () => {
 const _GUAGES = computed(() => {
   let totalTellings = _flatMap(
     _map(M.universe.hits.hits, "_source"),
-    "tellings"
+    "tellings",
   ).length;
 
   let episodeKeys = _uniq(
     _map(
       _flatMap(_map(M.universe.hits.hits, "_source"), "tellings"),
-      (t) => t.episode.key
-    )
+      (t) => t.episode.key,
+    ),
   );
 
   let sortedEps = _sortBy(episodeKeys, (a) => {
@@ -1020,7 +1219,7 @@ const _GUAGES = computed(() => {
     let aS = aP[0];
     let aE = String(_uniq(aP[1].match(/(\d+)/))).padStart(
       episodeKeys.length.toString().length,
-      "0"
+      "0",
     );
     return `${aS}.${aE}`;
   });
@@ -1031,20 +1230,7 @@ const _GUAGES = computed(() => {
     totalTellings: totalTellings,
     aveTellingsPer: (totalTellings / M.universe?.total).toFixed(1),
     totalEpisodes: episodeKeys.length,
-    // totalEpisodesOG: _uniq(
-    //   _map(
-    //     _flatMap(_map(M.universe.hits.hits, "_source"), "tellings"),
-    //     (t) => t.episode.key
-    //   )
-    // ).length,
     maxEpisode: sortedEps[sortedEps.length - 1],
-    // M.universe?.hits.hits
-    //  .map((h) => {
-    //    console.log("h", h);
-    //    return h._source.tellings;
-    //  })
-    //  .map((t) => t.episode.key)
-    //  .sort((e) => e),
   };
 });
 
@@ -1077,9 +1263,9 @@ const chartPieTellingClasses = computed(() => {
     _groupBy(
       _flatMap(
         _filter(_map(M.universe.hits.hits, "_source"), ["isMeta", false]),
-        "tellings"
+        "tellings",
       ),
-      "class"
+      "class",
     ),
     (v, n) => {
       let nom = _tellingClassClass?.find((tcc) => tcc.key == n);
@@ -1089,13 +1275,13 @@ const chartPieTellingClasses = computed(() => {
         value: v.length,
         name: noml,
       };
-    }
+    },
   );
 
   return {
     tooltip: {
       trigger: "item",
-      formatter: "{a} <br/>{b} : {c} ({d}%)",
+      formatter: "{b} : {c} ({d}%)",
     },
     series: [
       {
@@ -1125,7 +1311,7 @@ const chartBarTellingTopTotal = computed(() => {
         _filter(_map(M.universe.hits.hits, "_source"), ["isMeta", false]),
         [
           "tellingsLength", //by tellingsLength (this is precacled into elastic)
-        ]
+        ],
       ),
       (s) => {
         return {
@@ -1135,9 +1321,9 @@ const chartBarTellingTopTotal = computed(() => {
           elucidation: s.elucidation,
           tellingsLength: s.tellingsLength,
         };
-      }
+      },
     ),
-    10
+    10,
   );
 
   const tellingsLengths = _map(mappedBuckets, "tellingsLength");
@@ -1192,13 +1378,27 @@ const chartBarTellingTopTotal = computed(() => {
   };
 }); //chartbartellingtoptotal
 
+/*
+                                                            __ _     ____   __ __  _      _____ __ __ ____     __ _____
+                                                           /  ] |   |    | /  ]  |/ ]    |     |  |  |    \   /  ] ___/
+                                                          /  /| |    |  | /  /|  ' /     |   __|  |  |  _  | /  (   \_
+                                                         /  / | |___ |  |/  / |    \     |  |_ |  |  |  |  |/  / \__  |
+                                                        /   \_|     ||  /   \_|     \    |   _]|  :  |  |  /   \_/  \ |
+                                                        \     |     ||  \     |  .  |    |  |  |     |  |  \     \    |
+                                                         \____|_____|____\____|__|\_|    |__|   \__,_|__|__|\____|\___|
+
+                                                        */
 const chartTreeTagClick = (v, x, y) => {
   _Q.value = `tags:${v.data.name}`;
 };
 
 const chartPieClassClick = (v, x, y) => {
-  let translation = _tellingClassClass.find({ label: v.data.name }).key;
+  let translation = _filter(_tellingClassClass, { label: v.data.name })[0].key;
   _Q.value = `class:${translation}`;
+};
+
+const chartBarTitleClick = (v, x, y) => {
+  _Q.value = `title:"${v.data.name.split("(")[0].trim()}"`;
 };
 
 const chartTreeTellingTags = computed(() => {
@@ -1207,42 +1407,26 @@ const chartTreeTellingTags = computed(() => {
       _flatMap(
         _flatMap(
           _filter(_map(M.universe.hits.hits, "_source"), ["isMeta", false]),
-          "tellings"
+          "tellings",
         ),
-        "tags"
-      )
+        "tags",
+      ),
     ),
     (k, v) => {
       return {
         name: v,
         value: k,
-        // , link: `/search/tags:pets`,target:"blank"
       };
-    }
+    },
   );
 
   return {
     color: _values(COLORS),
-    // tooltip: {
-    //   formatter: function (info) {
-    //     console.log("info", info);
-    //     var value = info.value;
-    //     var treePathInfo = info.treePathInfo;
-    //     var treePath = [];
-    //     for (var i = 1; i < treePathInfo.length; i++) {
-    //       treePath.push(treePathInfo[i].name);
-    //     }
-    //     return [
-    //       '<div class="tooltip-title">' + treePath.join("/") + "</div>",
-    //     ].join("");
-    //   },
-    // },
     series: [
       {
         type: "treemap",
         breadcrumb: { show: false },
         data: mappedTags,
-        // ,nodeClick: "link"
       },
     ],
   };
@@ -1251,6 +1435,22 @@ const chartTreeTellingTags = computed(() => {
 <style scoped>
 .chart {
   height: 100vh;
+}
+.threedom-h5 {
+  font-weight: 900;
+  color: rgba(192, 70, 55, 1);
+}
+.threedom-h4 {
+  font-weight: 400;
+  color: rgba(192, 70, 55, 1);
+}
+.threedomcardimg {
+  filter: grayscale() blur(0.08rem);
+  opacity: 0.2;
+}
+.threedomcard {
+  /*  border-color: rgba(119, 78, 36, 1);*/
+  border-color: rgba(243, 221, 158, 1);
 }
 </style>
 <!-- <style lang="scss" scoped>
